@@ -16,7 +16,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".Signup" />
-        <activity android:name=".Resetpass"></activity>
+        <activity android:name=".Resetpass" />
+        <activity
+            android:name=".Loggedin"
+            android:label="@string/title_activity_loggedin"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

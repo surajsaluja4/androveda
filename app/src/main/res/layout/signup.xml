@@ -29,7 +29,7 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp">
 
@@ -125,7 +125,7 @@
                         android:layout_marginLeft="10dp"
                         android:padding="10dp"
 
-                        android:id="@+id/button"
+                        android:id="@+id/signup"
                         android:layout_gravity="center_horizontal"
                         android:background="@color/colorPrimary"
                         android:textColor="#ffffff" />
@@ -143,14 +143,16 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/imageView"
                     android:foregroundGravity="center"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/login"
+                    android:background="@drawable/signup3"
                     android:layout_alignWithParentIfMissing="true"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_alignParentEnd="false"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp" />
 
             </RelativeLayout>
 
