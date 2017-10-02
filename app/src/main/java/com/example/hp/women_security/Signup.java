@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.SQLOutput;
+
 public class Signup extends AppCompatActivity {
 Button sign;
     EditText name,email,phone,pass,confirm;
@@ -32,6 +34,7 @@ Button sign;
         email.addTextChangedListener(new MyTextWatcher(email));
         pass.addTextChangedListener(new MyTextWatcher(pass));
         phone.addTextChangedListener(new MyTextWatcher(phone));
+        confirm.addTextChangedListener(new MyTextWatcher(confirm));
 
         sign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +60,13 @@ Button sign;
         if (!validatephone()) {
             return;
         }
+        if(!validateconfirmpass()){
+            return;
+        }
 
         Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+        Intent i=new Intent(Signup.this,Resetpass.class);
+        startActivity(i);
     }
 
     private boolean validateName() {
@@ -72,7 +80,20 @@ Button sign;
 
         return true;
     }
+    private boolean validateconfirmpass() {
+        String pass1 = pass.getText().toString().trim();
+        String cpass1=confirm.getText().toString();
 
+        if (cpass1.isEmpty() || !isValidconfirm(cpass1,pass1)) {
+            confirm.setError(getString(R.string.err_msg_confirm));
+            requestFocus(confirm);
+            return false;
+        } else {
+            //inputLayoutEmail.setErrorEnabled(false);
+        }
+
+        return true;
+    }
     private boolean validateEmail() {
         String emails = email.getText().toString().trim();
 
@@ -118,6 +139,10 @@ String phno=phone.getText().toString();
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    private static boolean isValidconfirm(String con,String pass) {
+        boolean r=!TextUtils.isEmpty(con) && con.equals(pass);
+        return r;
+    }
     private static boolean isValidphoneno(String phno) {
         return !TextUtils.isEmpty(phno) && Patterns.PHONE.matcher(phno).matches();
     }
@@ -154,6 +179,10 @@ String phno=phone.getText().toString();
                     break;
                 case R.id.Phone:
                     validatephone();
+                    break;
+                case R.id.confirm:
+                    validateconfirmpass();
+
             }
         }
     }
