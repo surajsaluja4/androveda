@@ -12,8 +12,7 @@
         android:layout_width="wrap_content"
         android:background="@drawable/women4"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="30dp">
+        android:layout_gravity="center">
 
         <LinearLayout
             android:orientation="vertical"
@@ -38,22 +37,24 @@
                 android:gravity="bottom"
                 android:layout_gravity="bottom">
 
-                <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="suraj"
-                    android:id="@+id/bmain" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/imageView4"
                     android:background="@drawable/logo3"
                     android:layout_gravity="bottom" />
+
             </LinearLayout>
 
         </LinearLayout>
     </FrameLayout>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="suraj"
+        android:id="@+id/bmain"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
