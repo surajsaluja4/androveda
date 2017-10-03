@@ -1,6 +1,8 @@
 package com.example.hp.women_security;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,11 +15,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.sql.SQLOutput;
 
 public class Signup extends AppCompatActivity {
 Button sign;
     EditText name,email,phone,pass,confirm;
+    String Names,Emails,Phones,Passs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +76,7 @@ Button sign;
             return;
         }
 
+        saveinfo();
         Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
         Intent i=new Intent(Signup.this,Resetpass.class);
         startActivity(i);
@@ -146,6 +159,17 @@ String phno=phone.getText().toString();
     private static boolean isValidphoneno(String phno) {
         return !TextUtils.isEmpty(phno) && Patterns.PHONE.matcher(phno).matches();
     }
+    public void saveinfo(){
+        Names=name.getText().toString();
+        Emails=email.getText().toString();
+        Phones=phone.getText().toString();
+        Passs=pass.getText().toString();
+        Backgroundtask bt=new Backgroundtask();
+        bt.execute(Names, Emails, Phones, Passs);
+        finish();
+
+    }
+
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -184,6 +208,68 @@ String phno=phone.getText().toString();
                     validateconfirmpass();
 
             }
+        }
+
+
+    }
+
+    class Backgroundtask extends AsyncTask<String,Void,String>
+    {
+
+String add_url;
+        @Override
+        protected void onPreExecute() {
+            add_url="https://www.piettechies.com/android/add_data.php";
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+            String Nameb,Emailb,Passb,Phoneb;
+            Nameb=args[0];
+            Emailb=args[1];
+            Phoneb=args[2];
+            Passb=args[3];
+
+            URL url= null;
+            try {
+                url = new URL(add_url);
+                HttpURLConnection httpURLConnection=(HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                OutputStream outputStream=httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+
+                String data= URLEncoder.encode("name","UTF-8")+"="+URLEncoder.encode(Nameb,"UTF-8")+"&"+
+                        URLEncoder.encode("email","UTF-8")+"="+URLEncoder.encode(Emailb,"UTF-8")+"&"+
+                        URLEncoder.encode("phone","UTF-8")+"="+URLEncoder.encode(Phoneb,"UTF-8")+"&"+
+                        URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(Passb,"UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                InputStream inputStream=httpURLConnection.getInputStream();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return "One Row Inserted...";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Snackbar.make(findViewById(android.R.id.content),result,Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            }).show();
         }
     }
 }
