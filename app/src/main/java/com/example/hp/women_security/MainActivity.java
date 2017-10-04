@@ -57,17 +57,20 @@ private static int time_out=2000;
         NetworkInfo networkInfo=con.getActiveNetworkInfo();
         if(networkInfo!=null&&networkInfo.isConnected())
         {
-            new Handler().postDelayed(new Runnable(){
+           new getdataonline().execute();
+
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent pass=new Intent(MainActivity.this,Signup.class);
+                    Intent pass = new Intent(MainActivity.this, Signup.class);
                     startActivity(pass);
                     finish();
                 }
-            },time_out);
+            }, time_out);
         }
         else{
             Toast.makeText(getApplicationContext(),"Internet not Connected",Toast.LENGTH_LONG);
+
         }
 
     }

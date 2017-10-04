@@ -1,6 +1,8 @@
 package com.example.hp.women_security;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -93,6 +95,7 @@ Button sign;
 
         return true;
     }
+
     private boolean validateconfirmpass() {
         String pass1 = pass.getText().toString().trim();
         String cpass1=confirm.getText().toString();
@@ -168,6 +171,13 @@ String phno=phone.getText().toString();
         bt.execute(Names, Emails, Phones, Passs);
         finish();
 
+    }
+    public void save_offline(){
+        SharedPreferences sharedPref = getSharedPreferences("userinfo",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("usernname",Names);
+        editor.putString("password",Passs);
+        editor.commit();
     }
 
     private void requestFocus(View view) {
