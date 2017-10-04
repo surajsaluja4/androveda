@@ -57,12 +57,12 @@ private static int time_out=2000;
         NetworkInfo networkInfo=con.getActiveNetworkInfo();
         if(networkInfo!=null&&networkInfo.isConnected())
         {
-           new getdataonline().execute();
+         //  new getdataonline().execute();
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent pass = new Intent(MainActivity.this, Signup.class);
+                    Intent pass = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(pass);
                     finish();
                 }
